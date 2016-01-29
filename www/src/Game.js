@@ -62,14 +62,30 @@ BasicGame.Game.prototype = {
     },
 
     create: function () {
+        // http://phaser.io/examples/v2/groups/group-as-layer
+        // Create the sky layer, behind everything and donot move.
+        this.textLayer = this.game.add.group();
+        this.textLayer.z = 0;
+
+        // Create the cloud layer, just below the text
+        this.cloudLayer = this.game.add.group();
+        this.cloudLayer.z = 1;
+
+        // Mountains, walls, rivers that are static
+        this.collisionLayer = this.game.add.group();
+        this.collisionLayer.z = 2;
+
+        // Moving objects that are blocked by mountains
+        this.objectLayer = this.game.add.group();
+        this.objectLayer.z = 3;
+
+        // Blood splatter, summons, etc.
+        this.groundLayer = this.game.add.group();
+        this.groundLayer.z = 4;
+
+
         //http://phaser.io/examples/v2/input/cursor-key-movement
         cursors = this.game.input.keyboard.createCursorKeys();
-
-        // this.character = this.add.sprite(
-        //     this.world.centerX,
-        //     this.world.centerY,
-        //     'character');
-        // this.character.anchor.setTo(0.5, 0.5);
 
         this.character = this.add.sprite(
              this.world.centerX,
@@ -78,7 +94,7 @@ BasicGame.Game.prototype = {
         this.character.anchor.setTo(0.5, 0.5);
 
         // Summon those fools from dark earth
-        this.summon = {};
+        //this.summon = {};
         this.hasSummonAlready = false;
         this.summonKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         this.summonKey.onDown.add(this.summonShit, this);
@@ -129,11 +145,18 @@ BasicGame.Game.prototype = {
 
     summonShit : function () {
         //this.game.add.sprite(this.game.world.randomX, this.game.world.randomY, 'summon');
-        this.summon = this.add.sprite(
-            this.character.x,
-            this.character.y,
-            'summon');
-        this.summon.anchor.setTo(0.5, 0.5);
-    }
+        // this.summon = this.add.sprite(
+        //     this.character.x,
+        //     this.character.y,
+        //     'summon');
 
+        var summon = new Phaser.Sprite(
+                        this.game, 
+                        this.character.x,
+                        this.character.y, 
+                        'summon');
+        summon.anchor.setTo(0.5, 0.5);
+
+        this.groundLayer.add(summon);
+    }
 };
