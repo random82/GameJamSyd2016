@@ -8,6 +8,8 @@ BasicGame = {
 BasicGame.Game = function (game) {
 };
 
+var cursors;
+
 // set Game function prototype
 BasicGame.Game.prototype = {
 
@@ -58,13 +60,8 @@ BasicGame.Game.prototype = {
     },
 
     create: function () {
-        // Add logo to the center of the stage
-        // this.logo = this.add.sprite(
-        //     this.world.centerX, // (centerX, centerY) is the center coordination
-        //     this.world.centerY,
-        //     'logo');
-        // Set the anchor to the center of the sprite
-        //this.logo.anchor.setTo(0.5, 0.5);
+        //http://phaser.io/examples/v2/input/cursor-key-movement
+        cursors = this.game.input.keyboard.createCursorKeys();
 
         this.character = this.add.sprite(
             this.world.centerX,
@@ -82,6 +79,25 @@ BasicGame.Game.prototype = {
         // this callback is only really useful if you use a ScaleMode of RESIZE 
         // and place it inside your main game state.
 
+    },
+
+    update : function () {
+        if (cursors.up.isDown)
+        {
+            this.character.y--;
+        }
+        if (cursors.down.isDown)
+        {
+            this.character.y++;
+        }
+        if (cursors.left.isDown)
+        {
+            this.character.x--;
+        }
+        if (cursors.right.isDown)
+        {
+            this.character.x++;
+        }
     }
 
 };
