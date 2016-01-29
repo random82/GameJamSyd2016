@@ -101,20 +101,23 @@ BasicGame.Game.prototype = {
             this.character.y--;
             this.character.animations.play('up');
         }
-        if (cursors.down.isDown)
+        else if (cursors.down.isDown)
         {
             this.character.y++;
             this.character.animations.play('down');
         }
-        if (cursors.left.isDown)
+        else if (cursors.left.isDown)
         {
             this.character.x--;
             this.character.animations.play('left');
         }
-        if (cursors.right.isDown)
+        else if (cursors.right.isDown)
         {
             this.character.x++;
             this.character.animations.play('right');
+        }
+        else {
+            this.character.animations.stop();
         }
     }
 
