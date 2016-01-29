@@ -56,9 +56,9 @@ BasicGame.Game.prototype = {
         // Here we load the assets required for our preloader (in this case a 
         // background and a loading bar)
 
-        //this.load.image('character', 'asset/characterSingle.png');
         //http://phaser.io/examples/v2/sprites/spritesheet
         this.load.spritesheet('characterOrange', 'asset/characterOrangeLine.png', 16, 16, 12);
+        this.load.image('summon', 'asset/summonRed.png');
     },
 
     create: function () {
@@ -76,6 +76,12 @@ BasicGame.Game.prototype = {
              this.world.centerY, 
              'characterOrange');
         this.character.anchor.setTo(0.5, 0.5);
+
+        // Summon those fools from dark earth
+        this.summon = {};
+        this.hasSummonAlready = false;
+        this.summonKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        this.summonKey.onDown.add(this.summonShit, this);
 
         // animation name, frames, FPS, true? (maybe swap)
         var framesPerSecond = 10;
@@ -119,6 +125,15 @@ BasicGame.Game.prototype = {
         else {
             this.character.animations.stop();
         }
+    },
+
+    summonShit : function () {
+        //this.game.add.sprite(this.game.world.randomX, this.game.world.randomY, 'summon');
+        this.summon = this.add.sprite(
+            this.character.x,
+            this.character.y,
+            'summon');
+        this.summon.anchor.setTo(0.5, 0.5);
     }
 
 };
