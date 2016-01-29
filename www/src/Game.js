@@ -53,17 +53,24 @@ BasicGame.Game.prototype = {
 
         // Here we load the assets required for our preloader (in this case a 
         // background and a loading bar)
-        this.load.image('logo', 'asset/phaser.png');
+        //this.load.image('logo', 'asset/phaser.png');
+        this.load.image('character', 'asset/characterSingle.png');
     },
 
     create: function () {
         // Add logo to the center of the stage
-        this.logo = this.add.sprite(
-            this.world.centerX, // (centerX, centerY) is the center coordination
-            this.world.centerY,
-            'logo');
+        // this.logo = this.add.sprite(
+        //     this.world.centerX, // (centerX, centerY) is the center coordination
+        //     this.world.centerY,
+        //     'logo');
         // Set the anchor to the center of the sprite
-        this.logo.anchor.setTo(0.5, 0.5);
+        //this.logo.anchor.setTo(0.5, 0.5);
+
+        this.character = this.add.sprite(
+            this.world.centerX,
+            this.world.centerY,
+            'character');
+        this.character.anchor.setTo(0.5, 0.5);
 
     },
 
