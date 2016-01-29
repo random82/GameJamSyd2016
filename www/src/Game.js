@@ -55,20 +55,34 @@ BasicGame.Game.prototype = {
 
         // Here we load the assets required for our preloader (in this case a 
         // background and a loading bar)
-        //this.load.image('logo', 'asset/phaser.png');
-        this.load.image('character', 'asset/characterSingle.png');
+
+        //this.load.image('character', 'asset/characterSingle.png');
+        //http://phaser.io/examples/v2/sprites/spritesheet
+        this.load.spritesheet('characterOrange', 'asset/characterOrangeLine.png', 16, 16, 12);
     },
 
     create: function () {
         //http://phaser.io/examples/v2/input/cursor-key-movement
         cursors = this.game.input.keyboard.createCursorKeys();
 
+        // this.character = this.add.sprite(
+        //     this.world.centerX,
+        //     this.world.centerY,
+        //     'character');
+        // this.character.anchor.setTo(0.5, 0.5);
+
         this.character = this.add.sprite(
-            this.world.centerX,
-            this.world.centerY,
-            'character');
+             this.world.centerX,
+             this.world.centerY, 
+             'characterOrange');
         this.character.anchor.setTo(0.5, 0.5);
 
+        // animation name, frames, FPS, true? (maybe swap)
+        var framesPerSecond = 10;
+        this.character.animations.add('down', [0, 1, 2], framesPerSecond, true);
+        this.character.animations.add('right', [3, 4, 5], framesPerSecond, true);
+        this.character.animations.add('up', [6, 7, 8], framesPerSecond, true);
+        this.character.animations.add('left', [9, 10, 11], framesPerSecond, true);
     },
 
     gameResized: function (width, height) {
@@ -85,18 +99,22 @@ BasicGame.Game.prototype = {
         if (cursors.up.isDown)
         {
             this.character.y--;
+            this.character.animations.play('up');
         }
         if (cursors.down.isDown)
         {
             this.character.y++;
+            this.character.animations.play('down');
         }
         if (cursors.left.isDown)
         {
             this.character.x--;
+            this.character.animations.play('left');
         }
         if (cursors.right.isDown)
         {
             this.character.x++;
+            this.character.animations.play('right');
         }
     }
 
