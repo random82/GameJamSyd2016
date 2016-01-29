@@ -105,6 +105,20 @@ BasicGame.Game.prototype = {
         this.character.animations.add('right', [3, 4, 5], framesPerSecond, true);
         this.character.animations.add('up', [6, 7, 8], framesPerSecond, true);
         this.character.animations.add('left', [9, 10, 11], framesPerSecond, true);
+
+        // http://phaser.io/examples/v2/particles/emitter-width
+        // http://phaser.io/examples/v2/particles/firestarter
+        this.summonParticles = this.make.bitmapData(2, 2);
+        this.summonParticles.rect(0, 0, 4, 4, '#ffffff');
+        this.summonParticles.update();
+
+        this.emitter = this.add.emitter(0, 0, 128);
+        this.emitter.makeParticles(this.summonParticles);
+        this.emitter.gravity = 0;
+        this.emitter.setXSpeed(250, -250);
+        this.emitter.setYSpeed(-100, 100);
+        this.emitter.setAlpha(1, 0.2, 500);
+        this.emitter.flow(1000, 30, 2, -1, true);
     },
 
     gameResized: function (width, height) {
@@ -156,6 +170,9 @@ BasicGame.Game.prototype = {
                         this.character.y, 
                         'summon');
         summon.anchor.setTo(0.5, 0.5);
+
+        this.emitter.emitX = summon.x;
+        this.emitter.emitY = summon.y;
 
         this.groundLayer.add(summon);
     }
